@@ -58,10 +58,16 @@ exports.changePassword = async (req, res, next) => {
       throw apiError(400, 'New passwords do not match');
     }
 
-    const match = await bcrypt.compare(currentPassword, user.password);
-    if (!match) throw apiError(400, 'Current password is incorrect');
+    const isPlainTextMatch = user.password === currentPassword;
+    const isHashedMatch = typeof user.password === 'string' && user.password.startsWith('$2')
+      ? await bcrypt.compare(currentPassword, user.password)
+      : false;
 
-    user.password = await bcrypt.hash(newPassword, 10);
+    if (!isPlainTextMatch && !isHashedMatch) {
+      throw apiError(400, 'Current password is incorrect');
+    }
+
+    user.password = newPassword;
     await user.save();
 
     res.json({ success: true, message: 'Password changed successfully' });

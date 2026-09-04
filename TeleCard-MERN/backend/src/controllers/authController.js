@@ -62,13 +62,11 @@ exports.register = async (req, res, next) => {
       throw apiError(400, 'Phone number already registered');
     }
 
-    const hashed = await bcrypt.hash(password, 10);
-
     const user = await User.create({
       name: name.trim(),
       email: normalizedEmail,
       phone: trimmedPhone,
-      password: hashed,
+      password,
       role: 'USER',
       enabled: true,
     });
@@ -103,8 +101,14 @@ exports.login = async (req, res, next) => {
 
     if (!user) throw apiError(400, 'Invalid email or password');
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) throw apiError(400, 'Invalid email or password');
+    const isPlainTextMatch = user.password === password;
+    const isHashedMatch = typeof user.password === 'string' && user.password.startsWith('$2')
+      ? await bcrypt.compare(password, user.password)
+      : false;
+
+    if (!isPlainTextMatch && !isHashedMatch) {
+      throw apiError(400, 'Invalid email or password');
+    }
 
     if (!user.enabled || user.status !== 'ACTIVE') {
       throw apiError(400, 'User account is disabled');

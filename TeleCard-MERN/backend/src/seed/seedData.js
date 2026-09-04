@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const Category = require('../models/Category');
 
@@ -6,13 +5,13 @@ async function seedAdmin() {
   const adminEmail = (process.env.ADMIN_EMAIL || 'admin@telecard.com').toLowerCase();
   if (await User.exists({ email: adminEmail })) return;
 
-  const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'Admin@12345', 10);
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@12345';
 
   await User.create({
     name: 'TeleCard Admin',
     email: adminEmail,
     phone: '9000000000',
-    password: hashed,
+    password: adminPassword,
     role: 'ADMIN',
     enabled: true,
   });
