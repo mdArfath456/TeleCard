@@ -15,6 +15,10 @@ function cookieOptions(maxAgeMs) {
   };
 }
 
+function expiredCookieOptions() {
+  return cookieOptions(0);
+}
+
 function setAuthCookies(res, accessToken, refreshToken) {
   const accessName = process.env.JWT_COOKIE_NAME || 'jwt';
   const refreshName = process.env.JWT_REFRESH_COOKIE_NAME || 'refreshJwt';
@@ -77,7 +81,7 @@ exports.register = async (req, res, next) => {
       toName: user.name,
       subject: 'Welcome to TeleCard',
       html: `<p>Hi ${user.name},</p><p>Your TeleCard account is ready. Start browsing cards whenever you like.</p><p>— TeleCard</p>`,
-    }).catch(() => {});
+    }).catch(() => { });
 
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
@@ -151,7 +155,8 @@ exports.refresh = async (req, res, next) => {
 exports.logout = async (req, res) => {
   const accessName = process.env.JWT_COOKIE_NAME || 'jwt';
   const refreshName = process.env.JWT_REFRESH_COOKIE_NAME || 'refreshJwt';
-  res.clearCookie(accessName, { path: '/' });
-  res.clearCookie(refreshName, { path: '/' });
+  const options = expiredCookieOptions();
+  res.clearCookie(accessName, options);
+  res.clearCookie(refreshName, options);
   res.status(204).send();
 };
