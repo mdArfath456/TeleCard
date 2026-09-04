@@ -13,7 +13,7 @@ export default function Footer() {
               Tele<span className="text-gradient">Card</span>
             </span>
           </div>
-          <p className="text-xs text-slate-500">© {new Date().getFullYear()} TeleCard. Built for demo purposes — no real cards are issued.</p>
+          <p className="text-xs text-slate-500">© {new Date().getFullYear()} TeleCard. Built for a purpose — no fake cards are issued.</p>
         </div>
       </div>
     </footer>
