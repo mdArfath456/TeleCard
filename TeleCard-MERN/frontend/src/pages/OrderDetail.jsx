@@ -188,7 +188,7 @@ export default function OrderDetail() {
                   <button
                     onClick={payWithRazorpay}
                     disabled={!gateway.razorpayEnabled || rzpBusy}
-                    className="btn-glow group relative flex flex-col items-start gap-2 rounded-2xl border border-white/10 bg-gradient-to-br from-brand-600/20 to-accent-500/10 p-5 text-left transition-shadow hover:shadow-glow-sm disabled:opacity-40"
+                    className="btn-glow payment-option-glow group relative flex flex-col items-start gap-2 rounded-2xl border border-white/10 bg-gradient-to-br from-brand-600/20 to-accent-500/10 p-5 text-left transition-shadow hover:shadow-glow-sm disabled:opacity-40"
                   >
                     <ShieldCheck size={20} className="text-accent-400" />
                     <p className="font-semibold text-white">Pay securely with Razorpay</p>
