@@ -116,6 +116,10 @@ body {
 input, select, textarea {
   background-color: transparent !important;
 }
+select option {
+  background-color: #111120;
+  color: #f8fafc;
+}
 input:focus, select:focus, textarea:focus {
   outline: none;
 }
