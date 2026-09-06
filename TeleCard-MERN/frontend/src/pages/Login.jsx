@@ -10,13 +10,12 @@ export default function Login() {
   const { user, loading: authLoading, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
-  if (authLoading) return <Loader label="Checking your session" />;
-  if (user) return <Navigate to={location.state?.from?.pathname || '/'} replace />;
-
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  if (authLoading) return <Loader label="Checking your session" />;
+  if (user) return <Navigate to={location.state?.from?.pathname || '/'} replace />;
 
   const submit = async (e) => {
     e.preventDefault();

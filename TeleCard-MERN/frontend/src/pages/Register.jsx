@@ -9,13 +9,12 @@ import Loader from '../components/Loader';
 export default function Register() {
   const { user, loading: authLoading, register } = useAuth();
   const navigate = useNavigate();
-
-  if (authLoading) return <Loader label="Checking your session" />;
-  if (user) return <Navigate to="/" replace />;
-
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  if (authLoading) return <Loader label="Checking your session" />;
+  if (user) return <Navigate to="/" replace />;
 
   const field = (key, label, icon, type = 'text', placeholder = '') => (
     <div>
