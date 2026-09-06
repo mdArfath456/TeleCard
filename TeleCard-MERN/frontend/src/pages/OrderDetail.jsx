@@ -9,7 +9,7 @@ import StatusBadge from '../components/StatusBadge';
 import Loader from '../components/Loader';
 import { useAuth } from '../context/AuthContext';
 
-const UPI_ID = 'telecard@upi';
+const UPI_ID = '8374760456@axl';
 
 function loadRazorpayScript() {
   return new Promise((resolve) => {
